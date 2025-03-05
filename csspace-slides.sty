@@ -1,0 +1,105 @@
+\RequirePackage[russian]{babel}
+\RequirePackage{amssymb,amsmath,amsthm}
+\RequirePackage{fontspec,unicode-math,listings,xpatch}
+\RequirePackage{tikz}
+
+
+\usefonttheme{serif}
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamerfont*{title}{%
+  family=\sffamily, series=\bfseries, size=\LARGE}
+\setbeamerfont*{frametitle}{%
+  family=\sffamily, series=\bfseries, size=\Large}
+\setbeamerfont*{block title}{%
+  family=\rmfamily, series=\bfseries, shape=\itshape, size=\normalsize}
+
+
+\definecolor{dgray}{RGB}{12,12,12}
+
+\setbeamercolor{background canvas}{bg=dgray}
+\setbeamercolor{normal text}{fg=white}
+\setbeamercolor{alerted text}{fg=red!55!white}
+\setbeamercolor{frametitle}{bg=dgray,fg=white}
+\setbeamercolor{block title}{bg=white!20!dgray,fg=white}
+\setbeamercolor{block body}{bg=white!8!dgray}
+\setbeamercolor{item}{fg=LightSalmon!75!White}
+
+
+\setmainfont[Path = fonts/,
+    BoldFont = Montserrat-Bold.ttf,
+    ItalicFont = Montserrat-Italic.ttf,
+    BoldItalicFont = Montserrat-BoldItalic.ttf
+        ]{Montserrat-Regular.ttf}
+
+\setsansfont[Path = fonts/,
+    BoldFont = Unbounded-ExtraBold.ttf
+        ]{Unbounded-SemiBold.ttf}
+
+\setmathfont{Cambria Math}
+\setmonofont{Fira Code}
+\lstset{basicstyle=\ttfamily\footnotesize, breaklines=true}
+
+
+\setbeamertemplate{frametitle}{%
+    \vspace*{0.25cm}%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.85cm]{frametitle} \centering%
+        \usebeamerfont{frametitle}%
+        \tikz{
+            \node[right] at (0.8,0) {\insertframetitle};
+            \node[left,rectangle,rounded corners=2mm,inner sep=0.7ex,
+                  fill=white!10!dgray] at (\paperwidth,0)
+                 {\includegraphics[height=1.4ex]{logos/logo.eps}};
+        }%
+    \end{beamercolorbox}%
+}
+
+
+\setbeamersize{text margin left=6mm, text margin right=6mm}
+\xpatchcmd{\itemize}{\def\makelabel}{\setlength{\itemsep}{3mm}\def\makelabel}{}{}
+
+
+\newcommand{\starstemplate}{
+  \node at (0,0) {\includegraphics[width=12.8cm]{title/stars.pdf}};
+  \node[opacity=0.14] at (4,-4.5)
+       {\includegraphics[width=15cm]{title/waves.eps}};
+}
+
+\newcommand{\inktemplate}{
+  \fill[black] (-6.4,-4.8) rectangle (6.4,4.8);
+  \node[opacity=0.9] at (0,0)
+       {\includegraphics[height=5.5cm]{title/ink.pdf}};
+}
+
+\newcommand{\titlebackground}{\starstemplate}
+
+
+\newcommand{\Author}[2]{\ \begin{tabular}{c}
+  {\scriptsize\sffamily #1} \\ {\tiny #2}
+\end{tabular}\ }
+
+
+\defbeamertemplate*{title page}{customized}[1][]{
+    \makebox[\textwidth][c]{\begin{tikzpicture}
+        \clip (-6.39,-4.713) rectangle (6.39,4.713);
+        \titlebackground
+    
+        \node[above] at (0,-0.65) {
+            \begin{minipage}[b]{9cm} \centering
+                \includegraphics[width=1.6cm]{logos/logo-text.eps}
+                \vspace{0.5cm}    
+    
+                \usebeamerfont{title}\inserttitle
+            \end{minipage}
+        };
+    
+        \node[below,inner sep=1.4ex,rectangle,rounded corners=4.5mm,
+              draw=white,fill=black,opacity=0.42] at (0,-1.4)
+             {\phantom{\insertauthor}};
+        \node[below,inner sep=1.4ex] at (0,-1.4)
+             {\insertauthor};
+    \end{tikzpicture}}
+}
+
+
+\date{\today}

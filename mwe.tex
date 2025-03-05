@@ -1,0 +1,44 @@
+\documentclass[svgnames]{beamer}
+
+\usepackage{csspace-slides}
+
+\title{Lorem Ipsum Dolor Sit Amet: consectetur adipiscing elit sed do}
+
+\author{\texorpdfstring{
+    \Author{Артур Игнатьев}{руководитель CS Space}
+    \Author{Борис Золотов}{\TeX ал}
+}{}}
+
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\titlebackground}{\inktemplate}
+
+\maketitle
+
+
+\begin{frame}[fragile] \frametitle{Название слайда}
+
+Решение квадратного уравнения \(ax^2 + bx + c = 0\)
+задаётся формулой \[x_{1,2} = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}.\]
+
+\begin{block}{\vspace*{-3ex}}
+    \begin{itemize}
+        \item[•] У квадратного уравнения может не существовать решений
+        \item[•] У этого блока нет заголовка
+    \end{itemize}
+\end{block}
+
+\begin{lstlisting}
+int main () {
+    cout << "Hello, World!" << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\end{frame}
+
+
+\end{document}
