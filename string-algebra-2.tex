@@ -1,6 +1,7 @@
 \documentclass[svgnames]{beamer}
 
 \usepackage{csspace-slides}
+\newcommand{\flink}[1]{{\footnotesize\it\color{SkyBlue!40!White} #1}}
 
 \title{Удивительная алгебра сравнения строк (часть 2)}
 
@@ -20,7 +21,7 @@
 
 \begin{block}{\vspace*{-3ex}}
 {\it Задача:}
-для пары строк \(a\), \(b\) предподсчитать структуру данных, которая сможет
+для пары строк \(a\), \(b\) предподсчитать оракул, который сможет
 быстро отвечать на запросы вида \(\text{LCS} (a[\mathbf{0} : i_1], b[j_0 : j_1])\).
 \end{block} \vspace{1mm}
 
@@ -37,19 +38,22 @@
 
 \begin{block}{\vspace*{-3ex}}
 {\it Задача:}
-для пары строк \(a\), \(b\) предподсчитать структуру данных, которая сможет
+для пары строк \(a\), \(b\) предподсчитать оракул, который сможет
 быстро отвечать на запросы вида \(\text{LCS} (a[i_0 : i_1], b[j_0 : j_1])\).
 \end{block} \vspace{4mm}
 
 Запрос соответствует прямоугольнику на решётке, координаты вершин которого~—
-\(i_{0,\: 1}\), \(j_{0,\: 1}\).
+\(i_0\), \(i_1\); \(j_0\), \(j_1\).
 
 \end{frame}
 
 
-\begin{frame}{Local LCS à la Sakai}
+\begin{frame}{Local LCS: оракул Sakai}
+\vspace{-2mm}
 
-Предподсчёт за \(\tilde O\left(n^2\right)\), запрос за \(\tilde O\left( \sqrt{\ell} \right)\).
+Предподсчёт за \(\tilde O\left(n^2\right)\), запрос за \(\tilde O\left( \sqrt{\ell} \right)\). \hfill \flink{Sakai, 2022}
+
+Здесь \(\ell\)~— размер прямоугольника, соотв. запросу.
 \vspace{3mm}
 
 Для уровней, делящихся на \(\frac{n}{2^r}\), посчитаем перестановки \vspace{-2mm}
@@ -65,15 +69,21 @@
   \node[rotate=-30.827] at (0,0) {муравей};
 \end{tikzpicture} \end{center}
 
-{\it Запрос}~— перемножение муравьём подперестановок и {\it range queries.}
+{\it Запрос}~— \(\boxdot\)-перемножение подперестановок \\
+и {\it range queries.}
 
 \end{frame}
 
 
-\begin{frame}{Local LCS à la Charalampopoulos}
+\begin{frame}{Local LCS: оракул Ch+}
+
+\flink{Charalampopoulos, Gawrychowski, Mozes, Weimann, 2021.} \vspace{4mm}
+
 Если хранить перестановки в {\it дереве отрезков}, то между противоположными вершинами прямоугольника будет \(\log n\) шагов по перестановкам. \vspace{4mm}
 
-Трудность~— выбор индекса, в который приходит очередной шаг.
+Трудность~— выбор индекса, в который приходит очередной шаг. \vspace{4mm}
+
+{\it Ch+} используют {\it чёрный ящик MSSP,} а {\it мы знаем,} как улучшить время работы, применив муравья. 
 \end{frame}
 
 
@@ -92,14 +102,16 @@
 \end{center}
 
 Суммарный размер перестановок, изменённых при вставке/удалении символа, на каждом уровне иерархии,~— \(O(n)\).
+\hfill \flink{Charalampopoulos, Kociumaka, Mozes, 2020}
 
 \end{frame}
 
 
-\begin{frame}{Грассмановы перестановки}
+\begin{frame}{Аффинные перестановки}
 \vspace{-3mm}
 
 Научимся работать с перестановками в {\it аффинном моноиде Гекке.}
+\hfill \flink{Gaevoy, Tiskin, Zolotov, 2025}
 
 \begin{center}
   \includegraphics[width=5.5cm]{img-fg/tP}
@@ -109,14 +121,14 @@
   \includegraphics[width=5.5cm]{img-fg/tP-GF}
 \end{center}
 
-Каждая перестановка раскладывается на произведение {\it перестановки конечного типа} и {\it грассмановой перестановки.} \vspace{2mm}
+Аффинная перестановка раскладывается на произведение {\it перестановки конечного типа} и {\it грассмановой перестановки.} \vspace{2mm}
 
 \end{frame}
 
 
-\begin{frame}{Аффинное липкое умножение}
+\begin{frame}{Аффинное \(\boxdot\)-умножение}
 
-Аффинное \(\boxdot\) сводится к конечному \(\boxdot\) {\it трёх соседних периодов} перестановки.
+Можно свести \(\boxdot\)-умножение аффинных перестановок к обычному \(\boxdot\) их {\it трёх соседних периодов.}
 
 \begin{center}
   \includegraphics[width=4.9cm]{img-fg/PQ-base} \hspace{4mm}
@@ -135,7 +147,10 @@
 {\it Задача:} найти \(\mathrm{LCS} (a^k, b^m)\).
 \end{block} \vspace{4mm}
 
-Возвести перестановку в \(\boxdot\)-степень \(k\) и посчитать, сколько копий каждой нити пересекает \(m\) периодов. \vspace{4mm}
+\begin{itemize}
+  \item[•] Возвести перестановку в \(\boxdot\)-степень \(k\);
+  \item[•] посчитать, сколько копий каждой нити \\ пересекает \(m\) периодов.
+\end{itemize} \vspace{4mm}
 
 Время~— \(O (|a| \cdot |b|\ +\ |b| \cdot \log |b| \cdot \log k)\).
 
@@ -143,6 +158,8 @@
 
 
 \begin{frame}{Приближенный поиск подстрок}
+
+\flink{Charalampopoulos, Kociumaka, Wellnitz 2022} \vspace{-1mm}
 
 \begin{block}{\vspace*{-3ex}}
   {\it Задача:} найти в тексте \(T\) подстроки, отличающиеся от шаблона \(P\) не более чем на редакционное расстояние \(k\).
@@ -164,6 +181,7 @@
 
 
 \begin{frame}{Dynamic puzzle maching}
+\vspace{-3.5mm}
 
 Не отходим более чем на \(k\) от главной диагонали~— монжевы матрицы расстояний размером \(O(k)\).
 
@@ -172,6 +190,24 @@
 \end{center}
 
 Построение: малое суммарное \(\delta\)~— применим динамическое выравнивание, чтобы построить матрицы расстояний для всех возможных пар.
+
+\end{frame}
+
+
+\begin{frame}{Спасибо за внимание!}
+\vspace{-2mm}
+
+\begin{itemize}
+  \item[•] {\bfseries\itshape Dodrans-local LCS:} храним много перестановок, полученных муравьём
+  \item[•] {\bfseries\itshape Local LCS:} дерево отрезков из перестановок с операцией \(\boxdot\)
+  \item[•] {\bfseries\itshape Dynamic LCS:} дерево отрезков из перестановок переменного размера
+  \item[•] {\bfseries\itshape Periodic LCS:} аффинное \(\boxdot\)-умножение и его непосредственное применение 
+  \item[•] {\bfseries\itshape Approximate pattern matching:} применение динамического выравнивания при ограниченном редакционном расстоянии
+\end{itemize} \vspace{1.5mm}
+
+\begin{center}
+  \bf https://t.me/boris\_a\_z
+\end{center}
 
 \end{frame}
 
