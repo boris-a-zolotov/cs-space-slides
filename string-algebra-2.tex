@@ -15,59 +15,130 @@
 \maketitle
 
 
-\begin{frame}{\(\frac{3}{4}\)-local LCS}
+\begin{frame}{Dodrans-local LCS}
+\vspace{-8mm}
+
+\begin{block}{\vspace*{-3ex}}
+{\it Задача:}
+для пары строк \(a\), \(b\) предподсчитать структуру данных, которая сможет
+быстро отвечать на запросы вида \(\text{LCS} (a[\mathbf{0} : i_1], b[j_0 : j_1])\).
+\end{block} \vspace{1mm}
 
 \begin{center}
-  \includegraphics[width=9cm]{svg/34-local}
-\end{center}
+  \includegraphics[width=8cm]{svg/34-local}
+\end{center} \vspace{1mm}
+
+Посчитаем все префиксные \(\boxdot\)-произведения перестановок, будем хранить в структуре данных, отвечающей на {\it range queries.}
+
+\end{frame}
+
+
+\begin{frame}{Локальная задача LCS}
+
+\begin{block}{\vspace*{-3ex}}
+{\it Задача:}
+для пары строк \(a\), \(b\) предподсчитать структуру данных, которая сможет
+быстро отвечать на запросы вида \(\text{LCS} (a[i_0 : i_1], b[j_0 : j_1])\).
+\end{block} \vspace{4mm}
+
+Запрос соответствует прямоугольнику на решётке, координаты вершин которого~—
+\(i_{0,\: 1}\), \(j_{0,\: 1}\).
 
 \end{frame}
 
 
 \begin{frame}{Local LCS à la Sakai}
+
+Предподсчёт за \(\tilde O\left(n^2\right)\), запрос за \(\tilde O\left( \sqrt{\ell} \right)\).
+\vspace{3mm}
+
+Для уровней, делящихся на \(\frac{n}{2^r}\), посчитаем перестановки \vspace{-2mm}
+
+между теми, разность которых не превосходит \(\left( \frac{n}{2^r} \right)^2\).
+
+\begin{center} \begin{tikzpicture}
+  \node at (0,0) {\includegraphics[width=4.8cm]{svg/sakai}};
+  \node at (-2.5,1.9) {\footnotesize \(O\left(\ell^\frac{1}{4}\right)\)};
+  \node at (-1.3,1.9) {\footnotesize \(O\left(\ell^\frac{1}{2}\right)\)};
+  \node[right] at (2.4,-1.4) {\footnotesize \(O\left(\ell^\frac{1}{4}\right)\)};
+  \node[right] at (2.4,-0.75) {\footnotesize \(O\left(\ell^\frac{1}{2}\right)\)};
+  \node[rotate=-30.827] at (0,0) {муравей};
+\end{tikzpicture} \end{center}
+
+{\it Запрос}~— перемножение муравьём подперестановок и {\it range queries.}
+
 \end{frame}
 
 
-\begin{frame}{Local LCS à la CGMW, T\color{red!28!white}{Z}}
+\begin{frame}{Local LCS à la Charalampopoulos}
+Если хранить перестановки в {\it дереве отрезков}, то между противоположными вершинами прямоугольника будет \(\log n\) шагов по перестановкам. \vspace{4mm}
+
+Трудность~— выбор индекса, в который приходит очередной шаг.
 \end{frame}
 
 
 \begin{frame}{Динамическое выравнивание}
+\vspace{-7mm}
+
+\begin{block}{\vspace*{-3ex}}
+{\it Задача:} обновлять LCS при вставке/удалении символа произвольной из двух строк
+\end{block}
+
+Иерархия, в которой у каждого прямоугольника четыре потомка.
+Внутри каждого~— посчитана перестановка.
 
 \begin{center}
-  \includegraphics[width=4cm]{svg/dynamic}
+  \includegraphics[width=3.4cm]{svg/dynamic}
 \end{center}
+
+Суммарный размер перестановок, изменённых при вставке/удалении символа, на каждом уровне иерархии,~— \(O(n)\).
 
 \end{frame}
 
 
 \begin{frame}{Грассмановы перестановки}
+\vspace{-3mm}
+
+Научимся работать с перестановками в {\it аффинном моноиде Гекке.}
 
 \begin{center}
-  \includegraphics[width=6.4cm]{img-fg/tP}
+  \includegraphics[width=5.5cm]{img-fg/tP}
   
-  \includegraphics[width=6.4cm]{img-fg/tP-FG}
+  \includegraphics[width=5.5cm]{img-fg/tP-FG}
 
-  \includegraphics[width=6.4cm]{img-fg/tP-GF}
+  \includegraphics[width=5.5cm]{img-fg/tP-GF}
 \end{center}
+
+Каждая перестановка раскладывается на произведение {\it перестановки конечного типа} и {\it грассмановой перестановки.} \vspace{2mm}
 
 \end{frame}
 
 
 \begin{frame}{Аффинное липкое умножение}
 
-\begin{center}
-  \includegraphics[width=4.5cm]{img-fg/PQ-base} \hspace{4mm}
-  \includegraphics[width=4.5cm]{img-fg/PQ-GF3n} \vspace{2mm}
+Аффинное \(\boxdot\) сводится к конечному \(\boxdot\) {\it трёх соседних периодов} перестановки.
 
-  \includegraphics[width=4.5cm]{img-fg/PQ-GF3n-untg} \hspace{4mm}
-  \includegraphics[width=4.5cm]{img-fg/PQ-GF3n-z}  
+\begin{center}
+  \includegraphics[width=4.9cm]{img-fg/PQ-base} \hspace{4mm}
+  \includegraphics[width=4.9cm]{img-fg/PQ-GF3n} \vspace{2mm}
+
+  \includegraphics[width=4.9cm]{img-fg/PQ-GF3n-untg} \hspace{4mm}
+  \includegraphics[width=4.9cm]{img-fg/PQ-GF3n-z}  
 \end{center}
 
 \end{frame}
 
 
 \begin{frame}{Периодическая задача LCS}
+
+\begin{block}{\vspace*{-3ex}}
+{\it Задача:} найти \(\mathrm{LCS} (a^k, b^m)\).
+\end{block} \vspace{4mm}
+
+Возвести перестановку в \(\boxdot\)-степень \(k\) и посчитать, сколько копий каждой нити пересекает \(m\) периодов. \vspace{4mm}
+
+Время~— \(O (|a| \cdot |b|\ +\ |b| \cdot \log |b| \cdot \log k)\).
+
 \end{frame}
 
 
