@@ -47,7 +47,7 @@
 
 Сделать `fork` или скачать всё содержимое этого репозитория, вместе с
 картинками и шрифтами; далее редактировать файл
-[mwe.tex](https://github.com/boris-a-zolotov/cs-space-slides/blob/main/mwe.tex) 
+[mwe-slides.tex](https://github.com/boris-a-zolotov/cs-space-slides/blob/main/mwe-slides.tex) 
 на своё усмотрение, за исключением нюансов с титульной страницей,
 описанных выше.
 
