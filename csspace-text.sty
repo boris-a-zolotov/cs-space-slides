@@ -1,0 +1,60 @@
+\RequirePackage[russian]{babel}
+\RequirePackage[margin=0.8in,top=1in,bottom=1in]{geometry}
+\RequirePackage{amssymb,amsmath,amsthm,fancyhdr}
+\RequirePackage{fontspec,unicode-math,listings,xpatch}
+\RequirePackage{tikz}  \RequirePackage[most]{tcolorbox}
+\RequirePackage[pages=all]{background}
+
+
+\definecolor{dgray}{RGB}{12,12,12}  \pagecolor{dgray}  \color{white}
+
+\setmainfont[Path = fonts/,
+    BoldFont = Montserrat-Bold.ttf,
+    ItalicFont = Montserrat-Italic.ttf,
+    BoldItalicFont = Montserrat-BoldItalic.ttf
+        ]{Montserrat-Regular.ttf}
+
+\setsansfont[Path = fonts/,
+    BoldFont = Unbounded-ExtraBold.ttf
+        ]{Unbounded-SemiBold.ttf}
+
+\setmathfont{Cambria Math}
+\setmonofont{Fira Code}
+\lstset{basicstyle=\ttfamily\footnotesize, breaklines=true}
+
+
+\pagestyle{fancy}  \headheight=16pt
+\footskip=35pt  \parskip=2.5mm  \parindent=0mm
+\renewcommand{\headrulewidth}{0mm}
+\renewcommand{\footrulewidth}{0.12mm}
+\renewcommand{\footruleskip}{16pt}
+
+\renewcommand{\footrule}{{%
+  \color{white!50!dgray}
+  \hrule width \headwidth height \footrulewidth
+}}
+
+\fancyhead{}
+\fancyfoot[C]{\textcolor{white!50!dgray}\thepage}
+
+
+\newcommand{\sectionkeyword}{Section}
+\renewcommand{\thesection}{{\Large\sffamily\mdseries \sectionkeyword~\arabic{section}}}
+\newcommand{\csspaceTitle}[1]{\begin{center} \Large\sffamily\bfseries #1 \end{center}}
+
+\backgroundsetup{scale=1,color=dgray,opacity=1,angle=0,contents={%
+  \includegraphics[width=\paperwidth,height=\paperheight]{logos/a4-page}
+  }}
+
+
+\newtcolorbox{problembox}[1][]{
+  colback={white!8!dgray}, opacityback=0.5, coltext=white, arc=14pt, boxrule=0pt
+}
+
+\theoremstyle{definition}
+\newtheorem{prob}{Задача}
+\newenvironment{problem}[1]{%
+  \begin{problembox} \begin{prob}[#1]%
+}{%
+  \end{prob} \end{problembox}%
+}
